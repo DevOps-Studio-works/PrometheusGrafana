@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: grafana-argo
+  source:
+    repoURL: 'https://github.com/DevOps-Studio-works/PrometheusGrafana.git'
+    path: grafana
+    targetRevision: main  # or specify a Git branch, tag, or commit
+    helm:
+      releaseName: grafana661
+      valueFiles: 
+      - values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
